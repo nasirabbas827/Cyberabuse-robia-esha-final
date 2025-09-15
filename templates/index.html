@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Urdu Cyber Abuse Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #eef2f7; /* Lighter, more modern background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.app-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    border-radius: 20px; /* More rounded corners */
+    box-shadow: 0 15px 45px rgba(0,0,0,0.1); /* Softer, larger shadow */
+    transition: transform 0.3s ease-in-out;
+}
+
+.app-container:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    text-align: center;
+    color: #1f3a69; /* Deeper blue for text */
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+textarea {
+    width: 94%;
+    height: 140px;
+    padding: 20px;
+    border: none;
+    background: #f8f9fc;
+    border-radius: 12px;
+    font-size: 16px;
+    resize: vertical;
+    outline: none;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button {
+    width: 100%;
+    background-image: linear-gradient(135deg, #3498db, #2980b9); /* Gradient button */
+    color: #fff;
+    border: none;
+    padding: 16px;
+    margin-top: 20px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+}
+
+.results {
+    margin-top: 35px;
+}
+
+.results h2 {
+    color: #1f3a69;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate; /* Use separate to apply border-spacing */
+    border-spacing: 0 10px; /* Add space between rows */
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #eef2f7;
+    color: #5c6c8c;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Custom styles for first and last header cells for rounded corners */
+th:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+td {
+    background-color: #fcfdfe;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.abusive {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.non-abusive {
+    color: #2ecc71;
+    font-weight: 600;
+}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1>Roman Urdu Cyber Abuse Detection</h1>
+        <form method="POST">
+            <textarea name="comment" placeholder="Enter a Roman Urdu comment..." required></textarea>
+            <button type="submit">Check Comment</button>
+        </form>
+
+        {% if predictions %}
+        <div class="results">
+            <h2>Prediction Results</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for model, pred in predictions.items() %}
+                    <tr>
+                        <td>{{ model }}</td>
+                        <td class="{{ 'abusive' if pred == 'A' else 'non-abusive' }}">
+                            {{ ' Abusive (A)' if pred == 'A' else ' Non-Abusive (NA)' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
